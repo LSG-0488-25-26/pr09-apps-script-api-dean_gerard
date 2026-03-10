@@ -4,44 +4,53 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.smartphoneusage.data.SettingsRepository
 import com.example.smartphoneusage.ui.theme.SmartphoneUsageTheme
+import com.example.smartphoneusage.ui.view.HomeScreen
+import com.example.smartphoneusage.ui.view.LoginScreen
+import com.example.smartphoneusage.ui.view.RegisterScreen
+import com.example.smartphoneusage.ui.view.Routes
+import com.example.smartphoneusage.viewmodel.UserViewModel
+import com.example.smartphoneusage.viewmodel.UserViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             SmartphoneUsageTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                val navController = rememberNavController()
+                val context = LocalContext.current
+
+                val userViewModel: UserViewModel = viewModel(
+                    factory = UserViewModelFactory(
+                        SettingsRepository("AppSettings", context)
                     )
+                )
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Routes.Login.route
+                ) {
+                    composable(Routes.Login.route) {
+                        LoginScreen(navController, userViewModel)
+                    }
+
+                    composable(Routes.Register.route) {
+                        RegisterScreen(navController, userViewModel)
+                    }
+
+                    composable(Routes.Home.route) {
+                        HomeScreen(userViewModel)
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SmartphoneUsageTheme {
-        Greeting("Android")
     }
 }

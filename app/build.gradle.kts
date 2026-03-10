@@ -67,6 +67,7 @@ dependencies {
 
     //GLIDE
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation(libs.androidx.navigation.compose)
 
     //TESTS
     testImplementation("junit:junit:4.13.2")
