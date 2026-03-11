@@ -13,12 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -49,7 +48,7 @@ fun LoginScreen(
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
-    val botonHabilitado = username.isNotBlank() && password.isNotBlank()
+    val buttonEnabled = username.isNotBlank() && password.isNotBlank()
 
     Box(
         modifier = Modifier
@@ -67,7 +66,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Text(
-                text = "Bienvenido",
+                text = "Welcome",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
@@ -77,7 +76,7 @@ fun LoginScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Usuario",
+                    text = "Username",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -93,20 +92,14 @@ fun LoginScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Black,
+                        unfocusedIndicatorColor = Color(0xFFE0E0E0),
+                        disabledIndicatorColor = Color(0xFFE0E0E0),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         cursorColor = Color.Black
                     ),
                     placeholder = { Text("") }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color(0xFFE0E0E0)
                 )
             }
 
@@ -114,7 +107,7 @@ fun LoginScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Contraseña",
+                    text = "Password",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -132,20 +125,14 @@ fun LoginScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Black,
+                        unfocusedIndicatorColor = Color(0xFFE0E0E0),
+                        disabledIndicatorColor = Color(0xFFE0E0E0),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         cursorColor = Color.Black
                     ),
                     placeholder = { Text("") }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color(0xFFE0E0E0)
                 )
             }
 
@@ -153,16 +140,16 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    val loginCorrecto = userViewModel.login(username, password)
+                    val loginCorrect = userViewModel.login(username, password)
 
-                    if (loginCorrecto) {
-                        Toast.makeText(context, "Inicio de sesión correcto", Toast.LENGTH_LONG).show()
+                    if (loginCorrect) {
+                        Toast.makeText(context, "Login successful", Toast.LENGTH_LONG).show()
                         navController.navigate(Routes.Home.route)
                     } else {
-                        Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "User not found", Toast.LENGTH_LONG).show()
                     }
                 },
-                enabled = botonHabilitado,
+                enabled = buttonEnabled,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -175,7 +162,7 @@ fun LoginScreen(
                 )
             ) {
                 Text(
-                    text = "Iniciar sesión",
+                    text = "Log in",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -187,13 +174,13 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "¿No tienes cuenta? ",
+                    text = "Don’t have an account? ",
                     fontSize = 14.sp,
                     color = Color.Gray
                 )
 
                 Text(
-                    text = "Regístrate",
+                    text = "Sign up",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,

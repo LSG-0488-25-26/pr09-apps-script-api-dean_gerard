@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -48,7 +47,7 @@ fun RegisterScreen(
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
 
-    val botonHabilitado =
+    val buttonEnabled =
         username.isNotBlank() &&
                 password.isNotBlank() &&
                 confirmPassword.isNotBlank()
@@ -69,7 +68,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Crear cuenta",
+                text = "Create account",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
@@ -79,7 +78,7 @@ fun RegisterScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Usuario",
+                    text = "Username",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -95,20 +94,14 @@ fun RegisterScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Black,
+                        unfocusedIndicatorColor = Color(0xFFE0E0E0),
+                        disabledIndicatorColor = Color(0xFFE0E0E0),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         cursorColor = Color.Black
                     ),
                     placeholder = { Text("") }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color(0xFFE0E0E0)
                 )
             }
 
@@ -116,7 +109,7 @@ fun RegisterScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Contraseña",
+                    text = "Password",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -134,20 +127,14 @@ fun RegisterScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Black,
+                        unfocusedIndicatorColor = Color(0xFFE0E0E0),
+                        disabledIndicatorColor = Color(0xFFE0E0E0),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         cursorColor = Color.Black
                     ),
                     placeholder = { Text("") }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color(0xFFE0E0E0)
                 )
             }
 
@@ -155,7 +142,7 @@ fun RegisterScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Confirmar contraseña",
+                    text = "Confirm password",
                     fontSize = 14.sp,
                     color = Color.DarkGray
                 )
@@ -173,20 +160,14 @@ fun RegisterScreen(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Black,
+                        unfocusedIndicatorColor = Color(0xFFE0E0E0),
+                        disabledIndicatorColor = Color(0xFFE0E0E0),
                         focusedTextColor = Color.Black,
                         unfocusedTextColor = Color.Black,
                         cursorColor = Color.Black
                     ),
                     placeholder = { Text("") }
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color(0xFFE0E0E0)
                 )
             }
 
@@ -195,20 +176,20 @@ fun RegisterScreen(
             Button(
                 onClick = {
                     if (password != confirmPassword) {
-                        Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Passwords do not match", Toast.LENGTH_LONG).show()
                     } else if (!userViewModel.validarContrasena(password)) {
                         Toast.makeText(
                             context,
-                            "La contraseña debe tener mínimo 8 caracteres, un número y un símbolo",
+                            "Password must have at least 8 characters, one number and one symbol",
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
                         userViewModel.registerUser(username, password)
-                        Toast.makeText(context, "Usuario registrado", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "User registered", Toast.LENGTH_LONG).show()
                         navController.popBackStack()
                     }
                 },
-                enabled = botonHabilitado,
+                enabled = buttonEnabled,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
@@ -221,7 +202,7 @@ fun RegisterScreen(
                 )
             ) {
                 Text(
-                    text = "Registrarse",
+                    text = "Sign up",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
