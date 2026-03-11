@@ -11,12 +11,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.smartphoneusage.data.SettingsRepository
 import com.example.smartphoneusage.ui.theme.SmartphoneUsageTheme
+import com.example.smartphoneusage.ui.view.DataListScreen
 import com.example.smartphoneusage.ui.view.HomeScreen
 import com.example.smartphoneusage.ui.view.LoginScreen
 import com.example.smartphoneusage.ui.view.RegisterScreen
 import com.example.smartphoneusage.ui.view.Routes
+import com.example.smartphoneusage.viewmodel.SmartphoneViewModel
 import com.example.smartphoneusage.viewmodel.UserViewModel
 import com.example.smartphoneusage.viewmodel.UserViewModelFactory
+import com.example.smartphoneusage.ui.view.InsertScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +37,8 @@ class MainActivity : ComponentActivity() {
                     )
                 )
 
+                val smartphoneViewModel: SmartphoneViewModel = viewModel()
+
                 NavHost(
                     navController = navController,
                     startDestination = Routes.Login.route
@@ -47,7 +52,21 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(Routes.Home.route) {
-                        HomeScreen(userViewModel)
+                        HomeScreen(navController, userViewModel)
+                    }
+
+                    composable(Routes.DataList.route) {
+                        DataListScreen(
+                            viewModel = smartphoneViewModel,
+                            apiKey = BuildConfig.API_KEY
+                        )
+                    }
+
+                    composable(Routes.Insert.route) {
+                        InsertScreen(
+                            navController = navController,
+                            viewModel = smartphoneViewModel
+                        )
                     }
                 }
             }

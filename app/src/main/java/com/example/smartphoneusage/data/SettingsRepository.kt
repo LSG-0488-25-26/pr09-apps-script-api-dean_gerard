@@ -49,11 +49,7 @@ class SettingsRepository {
 
     fun obtenirUsuario(): String {
         val key = "user"
-        var value = sharedPreferences.getString(key, "") ?: ""
-
-        if (value.isBlank()) value = "Anónimo"
-
-        return value
+        return sharedPreferences.getString(key, "") ?: ""
     }
 
     fun obtenirPassword(): String {
