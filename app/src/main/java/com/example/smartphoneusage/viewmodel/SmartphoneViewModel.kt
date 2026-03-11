@@ -110,6 +110,52 @@ class SmartphoneViewModel : ViewModel() {
             try {
                 _loading.value = true
                 _error.value = null
+                _missatgeResposta.value = null
+
+                val genderOptions = listOf("Male", "Female", "Other")
+                val occupationOptions = listOf("Professional", "Student", "Freelancer", "Business Owner")
+
+                when {
+                    gender.isBlank() -> {
+                        _error.value = "Tienes que seleccionar una opción de género."
+                        return@launch
+                    }
+
+                    occupation.isBlank() -> {
+                        _error.value = "Tienes que seleccionar una opción de ocupación."
+                        return@launch
+                    }
+
+                    age < 18 || age > 85 -> {
+                        _error.value = "La edad debe estar entre 18 y 85 años."
+                        return@launch
+                    }
+
+                    gender !in genderOptions -> {
+                        _error.value = "El género seleccionado no es válido."
+                        return@launch
+                    }
+
+                    occupation !in occupationOptions -> {
+                        _error.value = "La ocupación seleccionada no es válida."
+                        return@launch
+                    }
+
+                    dailyPhoneHours < 0 || dailyPhoneHours > 24 -> {
+                        _error.value = "Las horas de móvil deben estar entre 0 y 24."
+                        return@launch
+                    }
+
+                    sleepHours < 0 || sleepHours > 24 -> {
+                        _error.value = "Las horas de sueño deben estar entre 0 y 24."
+                        return@launch
+                    }
+
+                    dailyPhoneHours + sleepHours > 24 -> {
+                        _error.value = "La suma de horas de móvil y sueño no puede ser mayor que 24."
+                        return@launch
+                    }
+                }
 
                 val body = PostRequest(
                     apiKey = apiKey,
@@ -122,6 +168,10 @@ class SmartphoneViewModel : ViewModel() {
 
                 val resposta = RetrofitInstance.api.inserirFila(body)
                 _missatgeResposta.value = resposta
+
+                if (resposta.status != "ok") {
+                    _error.value = resposta.message
+                }
 
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error al insertar registro"
