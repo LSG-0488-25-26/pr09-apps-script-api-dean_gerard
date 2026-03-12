@@ -1,4 +1,5 @@
 const API_KEY = PropertiesService.getScriptProperties().getProperty("API_KEY");
+const BASE_URL = PropertiesService.getScriptProperties().getProperty("BASE_URL");
 
 function doGet(e) {
 
@@ -26,11 +27,12 @@ function doGet(e) {
 
   // Primer endpoint, totes les dades
   if (type === "data") {
+    const limit = Number(e.parameter.limit || 100);
 
     const response = {
       status: "ok",
       totalRecords: jsonData.length,
-      data: jsonData
+      data: jsonData.slice(0, limit)
     };
 
     return ContentService

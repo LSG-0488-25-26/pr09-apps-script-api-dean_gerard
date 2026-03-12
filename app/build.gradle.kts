@@ -1,4 +1,5 @@
 import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.android.application)
@@ -6,12 +7,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val secretsFile = project.rootProject.file("app/secrets.properties")
+val secretsFile = project.file("secrets.properties")
 val secrets = Properties()
 if (secretsFile.exists()) {
-    secrets.load(secretsFile.inputStream())
+    secrets.load(FileInputStream(secretsFile))
 }
-
 android {
     namespace = "com.example.smartphoneusage"
     compileSdk = 36
@@ -24,8 +24,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", "\"${secrets["API_KEY"] ?: ""}\"")
-        buildConfigField("String", "BASE_URL", "\"${secrets["BASE_URL"] ?: ""}\"")
+        buildConfigField("String", "API_KEY", "\"${secrets.getProperty("API_KEY") ?: ""}\"")
+        buildConfigField("String", "BASE_URL", "\"${secrets.getProperty("BASE_URL") ?: ""}\"")
     }
 
     buildTypes {

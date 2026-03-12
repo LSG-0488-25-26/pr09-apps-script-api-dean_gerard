@@ -18,7 +18,8 @@ interface SmartphoneApiService {
     @GET("exec")
     suspend fun getDades(
         @Query("apiKey") apiKey: String,
-        @Query("type") type: String = "data"
+        @Query("type") type: String = "data",
+        @Query("limit") limit: Int = 100
     ): GetDataResponse
 
     /**

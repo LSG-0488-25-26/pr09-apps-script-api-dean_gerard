@@ -35,7 +35,9 @@ class SmartphoneViewModel : ViewModel() {
                 _loading.value = true
                 _error.value = null
 
-                val resposta = RetrofitInstance.api.getDades(apiKey)
+                val resposta = RetrofitInstance.api.getDades(apiKey,
+                    limit = 100
+                )
 
                 if (resposta.status == "ok") {
                     _records.value = resposta.data
@@ -56,6 +58,7 @@ class SmartphoneViewModel : ViewModel() {
             try {
                 _loading.value = true
                 _error.value = null
+                _records.value = emptyList()
 
                 val resposta = RetrofitInstance.api.getStats(apiKey)
 
@@ -71,6 +74,10 @@ class SmartphoneViewModel : ViewModel() {
                 _loading.value = false
             }
         }
+    }
+
+    fun netejarStats() {
+        _stats.value = null
     }
 
     fun filtrarPerOcupacio(apiKey: String, ocupacio: String) {

@@ -20,7 +20,6 @@ import com.example.smartphoneusage.viewmodel.SmartphoneViewModel
 import com.example.smartphoneusage.viewmodel.UserViewModel
 import com.example.smartphoneusage.viewmodel.UserViewModelFactory
 import com.example.smartphoneusage.ui.view.InsertScreen
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
